@@ -1,3 +1,12 @@
+{{ config(
+    materialized='table',
+    partition_by={
+      "field": "signup_date",
+      "data_type": "date"
+    },
+    cluster_by=["plan", "country"]
+) }}
+
 select
     u.user_id,
     u.name,
