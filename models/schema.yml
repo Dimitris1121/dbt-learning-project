@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: stg_users
+    description: "Cleaned users from seed data"
+    columns:
+      - name: user_id
+        description: "Unique user identifier"
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_enrollments
+    description: "Cleaned enrollment events"
+    columns:
+      - name: enrollment_id
+        description: "Unique enrollment identifier"
+        tests:
+          - not_null
+          - unique
+      - name: user_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_users')
+                field: user_id
+
+  - name: fct_user_engagement
+    description: "User engagement metrics — enrollments and completion rates per user"
+    columns:
+      - name: user_id
+        tests:
+          - not_null
+          - unique
